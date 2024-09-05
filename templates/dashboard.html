@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Online Learning LMS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/courses">View Courses</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, <span id="usernameDisplay"></span>!</h2>
+        <section id="userCourses">
+            <h3>Your Courses:</h3>
+            <ul id="courseList"></ul>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = localStorage.getItem('userId');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const courseList = document.getElementById('courseList');
+
+            if (userId) {
+                fetch(`/api/enrollments/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        usernameDisplay.textContent = localStorage.getItem('username') || 'Guest';
+                        data.forEach(enrollment => {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<a href="/course/${enrollment.course_id}"></a>`;
+                            courseList.appendChild(li);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+</body>
+</html>

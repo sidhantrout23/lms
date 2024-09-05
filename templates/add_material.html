@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Material - Online Learning LMS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Add Material to Course</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <form id="addMaterialForm" method="POST" action="{{ url_for('courses.add_course_material', course_id=course.id) }}" enctype="multipart/form-data">
+            <label for="file">Choose Material to Upload:</label>
+            <input type="file" id="file" name="file" required>
+            <input type="hidden" id="courseId" name="course_id" value="{{ course.id }}">
+            <br>
+            <button type="submit">Add Material</button>
+        </form>
+        <p id="addMaterialMessage"></p>
+    </main>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

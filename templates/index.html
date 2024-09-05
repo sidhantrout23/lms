@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Online Learning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Online Learning Platform</h1>
+        <nav>
+            <a href="/courses">View Courses</a>
+            <a id="loginLink" href="/login">Login</a>
+            <a id="registerLink" href="/register">Register</a>
+            <a id="logoutLink" href="/logout" style="display:none;">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <p>Let's learn together!</p>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userId = localStorage.getItem('userId'); // Get the userId from localStorage
+            const loginLink = document.getElementById('loginLink');
+            const registerLink = document.getElementById('registerLink');
+            const logoutLink = document.getElementById('logoutLink');
+
+            if (userId) {
+                // If userId exists, user is logged in
+                loginLink.style.display = 'none';  // Hide login link
+                registerLink.style.display = 'none'; // Hide register link
+                logoutLink.style.display = 'inline'; // Show logout link
+            } else {
+                // If userId does not exist, user is not logged in
+                loginLink.style.display = 'inline';  // Show login link
+                registerLink.style.display = 'inline'; // Show register link
+                logoutLink.style.display = 'none'; // Hide logout link
+            }
+        });
+    </script>
+</body>
+</html>
